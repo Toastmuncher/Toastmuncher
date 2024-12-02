@@ -1,0 +1,44 @@
+﻿def can_form_teams(males, females):
+    total_players = males + females
+    
+    # Check if there are at least 6 players
+    if total_players < 6:
+        return False
+    
+    # Check if total players is even
+    if total_players % 2 != 0:
+        return False
+    
+    team_size = total_players // 2
+    
+    # Iterate through possible male counts for team 1
+    for team1_males in range(0, min(males, team_size) + 1):
+        team1_females = team_size - team1_males
+        
+        # Check if team 1 can be formed
+        if team1_females < 0 or team1_females > females:
+            continue
+        
+        # Calculate remaining players for team 2
+        remaining_males = males - team1_males
+        remaining_females = females - team1_females
+        
+        # Check if team 2 can be formed
+        if remaining_males >= 0 and remaining_females >= 0 and (remaining_males + remaining_females) == team_size:
+            return True
+            
+    return False
+
+
+# Input
+try:
+    males = int(input("Enter the number of males: "))
+    females = int(input("Enter the number of females: "))
+
+
+    if can_form_teams(males, females):
+        print("It is possible to form the teams.")
+    else:
+        print("It is not possible to form the teams.")
+except ValueError:
+    print("Please enter valid integers for the number of males and females.")
